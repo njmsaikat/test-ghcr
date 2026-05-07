@@ -1,0 +1,46 @@
+services:
+  backend:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    container_name: backend
+    command: >
+      sh -c "cd /app/backend && python manage.py wait_for_db && python3
+      manage.py makemigrations &&  python3 manage.py migrate &&  python3
+      manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+      - static_volume:/app/backend/static
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    hostname: backend
+    networks:
+      - main
+    env_file:
+      - ./.env/dev.env
+
+  db:
+    image: postgres
+    restart: always
+    container_name: db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_DB: mydb
+      POSTGRES_PASSWORD: admin
+      TZ: "Asia/Dhaka"
+    ports:
+      - 5439:5432
+    volumes:
+      - pgdata:/var/lib/posgresql/data
+    networks:
+      - main
+
+networks:
+  main:
+
+volumes:
+  pgdata:
+  static_volume:
