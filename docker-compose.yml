@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     # Uncomment for production and set your GitHub username:
-    # image: ghcr.io/YOUR-GITHUB-USERNAME/test-ghcr-backend:latest
+    image: ghcr.io/njmsaikat/test-ghcr-backend:latest
 
     restart: always
     container_name: backend

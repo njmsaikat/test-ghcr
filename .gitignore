@@ -136,3 +136,4 @@ dmypy.json
 #custom ignore
 backend/media/images/uploads/
 static/
+.env
